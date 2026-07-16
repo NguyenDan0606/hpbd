@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-900 text-white overflow-hidden w-screen h-screen">
+    <!-- Music -->
+    <audio id="bg-music" src="v1/music.mp3" loop></audio>
+
+    <!-- Scene 1: Bedroom & Password -->
+    <div id="scene1"
+        class="scene active w-full h-full absolute top-0 left-0 bg-cover bg-center flex flex-col items-center justify-center"
+        style="background-image: url('img/bedroom.svg');">
+        <div class="glass-panel p-6 rounded-2xl flex flex-col items-center max-w-sm w-[90%]">
+            <img src="img/ye.jpg" alt="Friend"
+                class="w-32 h-32 rounded-full border-4 border-white shadow-lg mb-6 object-cover">
+
+            <div class="w-full bg-white/20 rounded-lg p-4 mb-4 text-center text-xl font-mono tracking-widest min-h-[64px] flex items-center justify-center shadow-inner"
+                id="password-display">
+                Nhập Pass để nhận quà
+            </div>
+
+            <p id="password-hint" class="text-sm italic mb-4 opacity-80 text-center transition-opacity duration-300">Gợi
+                ý: ngày đầu tiên gặp nhau</p>
+
+            <div class="grid grid-cols-3 gap-3 w-full">
+                <!-- Numbers 1-9 -->
+                <button class="numpad-btn" onclick="enterDigit(1)">1</button>
+                <button class="numpad-btn" onclick="enterDigit(2)">2</button>
+                <button class="numpad-btn" onclick="enterDigit(3)">3</button>
+                <button class="numpad-btn" onclick="enterDigit(4)">4</button>
+                <button class="numpad-btn" onclick="enterDigit(5)">5</button>
+                <button class="numpad-btn" onclick="enterDigit(6)">6</button>
+                <button class="numpad-btn" onclick="enterDigit(7)">7</button>
+                <button class="numpad-btn" onclick="enterDigit(8)">8</button>
+                <button class="numpad-btn" onclick="enterDigit(9)">9</button>
+                <!-- Controls -->
+                <button class="numpad-btn bg-red-500/50 hover:bg-red-500/70" onclick="clearPassword()">Xóa</button>
+                <button class="numpad-btn" onclick="enterDigit(0)">0</button>
+                <button class="numpad-btn bg-green-500/50 hover:bg-green-500/70" onclick="checkPassword()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 2: Book & Popups -->
+    <div id="scene2"
+        class="scene hidden w-full h-full absolute top-0 left-0 bg-pink-100 flex flex-col items-center justify-center perspective-1000">
+
+        <!-- Book Container -->
+        <div id="book-container"
+            class="relative w-64 h-80 transition-transform duration-1000 transform-style-3d cursor-pointer"
+            onclick="openBook()">
+            <!-- Cover -->
+            <div id="book-cover"
+                class="absolute w-full h-full bg-pink-400 rounded-r-lg shadow-2xl origin-left transition-transform duration-1000 z-10 flex flex-col items-center justify-center overflow-hidden border-l-4 border-pink-600">
+                <img src="img/ye1.jpg" class="w-full h-full object-cover opacity-80" alt="Cover">
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-pink-600/90 to-transparent flex items-end justify-center pb-8">
+                    <h2 class="text-2xl font-bold text-white drop-shadow-md text-center px-4">Mở nó ik</h2>
+                </div>
+            </div>
+            <!-- Inside Pages -->
+            <div
+                class="absolute w-full h-full bg-white rounded-r-lg shadow-inner z-0 p-6 flex flex-col justify-center items-center text-gray-800 text-center border-l-4 border-gray-300">
+                <h3 class="text-xl font-bold mb-4 text-pink-500">Chúc mừng sinh nhật Yeeeeeeeeeee!</h3>
+                <p class="text-sm italic">Phải luôn mỉm cười và hạnh phúc nhe chưa.</p>
+            </div>
+        </div>
+
+        <button id="btn-scene2-continue"
+            class="mt-12 px-6 py-3 bg-pink-500 text-white rounded-full shadow-lg font-bold opacity-0 pointer-events-none transition-all duration-500 hover:bg-pink-600 hover:scale-105 active:scale-95"
+            onclick="showPopup(1)">Tiếp tục</button>
+
+        <!-- Popup Container -->
+        <div id="popup-overlay"
+            class="absolute inset-0 bg-black/50 z-50 hidden flex items-center justify-center backdrop-blur-sm">
+            <div id="popup-box"
+                class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-[90%] text-center text-gray-800 transform scale-90 transition-transform duration-300">
+                <h3 id="popup-text" class="text-lg font-bold mb-6">Bà có nhớ thằng nhóc này không?</h3>
+                <div class="relative flex justify-center gap-4 h-12">
+                    <button id="btn-yes"
+                        class="px-6 py-2 bg-green-500 text-white rounded-full font-bold hover:bg-green-600 active:scale-95 transition-transform"
+                        onclick="handleYes()">Có</button>
+                    <!-- No button wrapper for absolute positioning -->
+                    <div id="btn-no-wrapper" class="absolute right-8">
+                        <button id="btn-no"
+                            class="px-6 py-2 bg-red-500 text-white rounded-full font-bold">Không</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 3: V2 GSAP Sequence -->
+    <div id="scene3"
+        class="scene hidden w-full h-full absolute top-0 left-0 bg-white text-gray-800 flex items-center justify-center p-6 text-center">
+        <div id="v2-text-container" class="text-2xl md:text-4xl font-light w-full max-w-2xl">
+            <!-- GSAP targets -->
+            <div class="v2-seq absolute inset-0 flex flex-col items-center justify-center opacity-0 px-4">
+                <h1 class="text-4xl font-bold mb-2">Chào <span class="text-pink-500">Yeee</span></h1>
+                <p>Đán tên là Đán</p>
+            </div>
+            <div class="v2-seq absolute inset-0 flex flex-col items-center justify-center opacity-0 px-4">
+                <p>Bài đặt sinh nhật sinh ơ!!! :D</p>
+                <p class="mt-2">Hỏng rủ tui luôn hé :v</p>
+            </div>
+            <div class="v2-seq absolute inset-0 flex flex-col items-center justify-center opacity-0 px-4">
+                <div class="bg-gray-100 p-4 rounded-xl border w-full max-w-xs shadow-md">
+                    <div id="chat-scroll" class="h-40 overflow-y-auto text-left pr-2">
+                        <p class="text-lg"><span id="chatbox-typed"></span></p>
+                    </div>
+                    <div class="mt-4 text-right">
+                        <button id="btn-chat-send"
+                            class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm origin-center">Gửi</button>
+                    </div>
+                </div>
+            </div>
+            <div class="v2-seq absolute inset-0 flex items-center justify-center opacity-0 px-4">
+                <div class="relative w-full h-32 flex items-center justify-center">
+                    <p class="v2-idea absolute opacity-0 text-center w-full">Đó là những gì Đán muốn làm.</p>
+                    <p class="v2-idea absolute opacity-0 text-center w-full">Nhưng mà Đán hỏng làm được.</p>
+                    <p class="v2-idea absolute opacity-0 text-center w-full">Đán muốn làm nhiều điều <strong
+                            class="text-red-500">đặc biệt</strong> cho Ye lắm.</p>
+                    <p class="v2-idea absolute opacity-0 text-center w-full">Bởi vì, Ye ...</p>
+                    <p
+                        class="v2-idea absolute opacity-0 text-center w-full text-3xl md:text-5xl text-red-600 font-bold">
+                        Đặc Biệt <span id="smiley-icon" class="inline-block ml-1">:)</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 4: V1 Cake & Typing -->
+    <div id="scene4"
+        class="scene hidden w-full h-full absolute top-0 left-0 bg-[#f9f9f9] flex flex-col items-center justify-center p-6">
+        <!-- Fireworks from v2 -->
+        <div id="v2-fireworks" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+        <div class="text-center w-full max-w-2xl mx-auto flex flex-col items-center z-10">
+            <img src="v1/img/banner.png" alt="Banner" class="w-full max-w-sm mb-6">
+
+            <div class="min-h-[6rem] flex items-center justify-center text-xl md:text-2xl font-mono text-gray-700 w-full px-4">
+                <div class="text-center">
+                    <span id="typed-output"></span>
+                </div>
+            </div>
+            <div id="typed-strings" class="hidden">
+                <p>Happy Birthday <strong class="text-pink-500">Người Đẹp Đặc Biệt, Dễ Thương Nhất Trên Thế Giới</strong></p>
+                <p>Nhớ nha, lúc nào cũng phải cười ă nha</p>
+                <p>Thổi nến ik</p>
+            </div>
+
+            <img src="v1/img/cake.gif" alt="Cake" class="w-48 mt-8">
+            <p id="s4-instruction" class="mt-6 text-gray-800 italic opacity-0">Click vào "Tiếp tục" nếu bà đã thổi nến của tui!</p>
+            <button id="btn-scene4-continue"
+                class="mt-4 px-8 py-3 bg-pink-500 text-white rounded-full shadow-lg font-bold hover:bg-pink-600 hover:scale-105 active:scale-95 transition-all opacity-0 pointer-events-none"
+                onclick="nextScene()">Tiếp tục</button>
+        </div>
+    </div>
+
+    <!-- Scene 5: V2 End effects (Balloons, Snowflakes, Hat) -->
+    <div id="scene5"
+        class="scene hidden w-full h-full absolute top-0 left-0 overflow-hidden bg-pink-50 flex items-center justify-center">
+        <!-- Confetti canvas from v1 or custom GSAP from v2 -->
+        <canvas id="confetti" class="absolute inset-0 z-0 pointer-events-none"></canvas>
+
+        <div id="s5-profile" class="z-10 text-center flex flex-col items-center transform translate-y-[200%]">
+            <div class="relative w-48 h-48 mb-6">
+                <img src="img/ye2.jpg"
+                    class="w-full h-full object-cover rounded-full border-4 border-pink-400 shadow-xl">
+                <img id="s5-hat" src="v2/img/hat.svg"
+                    class="absolute -top-12 -right-6 w-24 transform rotate-12 opacity-0">
+            </div>
+            <h3 class="text-4xl font-bold text-pink-600 drop-shadow-sm mb-2">Sinh Nhật Dui Dẻ Nha Bà Dàa!</h3>
+            <h5 class="text-gray-700 text-xl font-light italic mt-2">Cái bà trong ảnh ở trên là món quà đặc biệt và quý
+                giá nhất tôi từng có đó! ;)</h5>
+        </div>
+
+        <!-- Balloons container -->
+        <div id="balloons-container"
+            class="absolute bottom-0 left-0 w-full h-full pointer-events-none z-20 overflow-hidden">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

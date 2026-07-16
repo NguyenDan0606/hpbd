@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap');
+
+body {
+    font-family: 'Work Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.numpad-btn {
+    @apply w-full aspect-square rounded-full flex items-center justify-center text-xl font-bold bg-white/20 hover:bg-white/30 active:scale-95 transition-all shadow-sm;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.transform-style-3d {
+    transform-style: preserve-3d;
+}
+
+/* Book Cover Flip */
+.origin-left {
+    transform-origin: left center;
+}
+
+#book-container.open #book-cover {
+    transform: rotateY(-140deg);
+}
+
+/* Scene transitions */
+.scene {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+.scene.active {
+    opacity: 1;
+    pointer-events: auto;
+}
