@@ -9,27 +9,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-gray-900 text-white overflow-hidden w-screen h-screen">
-    <!-- Music -->
-    <audio id="bg-music" src="v1/music.mp3" loop></audio>
+<body class="bg-gray-900 text-white overflow-hidden w-full h-[100dvh] min-h-[100dvh]">
 
     <!-- Scene 1: Bedroom & Password -->
     <div id="scene1"
-        class="scene active w-full h-full absolute top-0 left-0 bg-cover bg-center flex flex-col items-center justify-center"
+        class="scene active w-full h-full absolute top-0 left-0 bg-cover bg-center flex flex-col items-center justify-center p-3 safe-area-pad"
         style="background-image: url('img/bedroom.svg');">
-        <div class="glass-panel p-6 rounded-2xl flex flex-col items-center max-w-sm w-[90%]">
+        <div class="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col items-center max-w-xs sm:max-w-sm w-[94%] max-h-[92dvh] overflow-y-auto no-scrollbar shadow-2xl">
             <img src="img/ye.jpg" alt="Friend"
-                class="w-32 h-32 rounded-full border-4 border-white shadow-lg mb-6 object-cover">
+                class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white shadow-lg mb-4 sm:mb-6 object-cover shrink-0">
 
-            <div class="w-full bg-white/20 rounded-lg p-4 mb-4 text-center text-xl font-mono tracking-widest min-h-[64px] flex items-center justify-center shadow-inner"
+            <div class="w-full bg-white/20 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4 text-center text-lg sm:text-xl font-mono tracking-widest min-h-[56px] sm:min-h-[64px] flex items-center justify-center shadow-inner"
                 id="password-display">
                 Nhập Pass
             </div>
 
-            <p id="password-hint" class="hidden text-sm italic mb-4 opacity-80 text-center transition-opacity duration-300">Gợi
+            <p id="password-hint" class="hidden text-xs sm:text-sm italic mb-3 opacity-80 text-center transition-opacity duration-300">Gợi
                 ý: ngày đầu tiên gặp nhau</p>
 
-            <div class="grid grid-cols-3 gap-3 w-full">
+            <div class="grid grid-cols-3 gap-2.5 sm:gap-3 w-full">
                 <!-- Numbers 1-9 -->
                 <button class="numpad-btn" onclick="enterDigit(1)">1</button>
                 <button class="numpad-btn" onclick="enterDigit(2)">2</button>
@@ -48,182 +46,69 @@
         </div>
     </div>
 
-    <!-- Mode Selection Modal Overlay -->
-    <div id="mode-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex flex-col items-center justify-center p-6 transition-all duration-500 opacity-0">
-        <div class="max-w-md w-full text-center">
-            <h2 class="text-3xl font-bold text-white mb-2 drop-shadow-md font-serif-elegant">Chọn ik</h2>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
-                <!-- Option 1: Sinh nhật -->
-                <div onclick="selectMode('birthday')" class="mode-card cursor-pointer bg-gradient-to-br from-pink-500/80 to-rose-600/80 border border-white/30 rounded-2xl p-6 flex flex-col items-center justify-center text-white shadow-xl hover:border-white transition-all">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl mb-4 shadow-inner">
-                        🎂
-                    </div>
-                    <h3 class="text-xl font-bold mb-1">Sinh Nhật</h3>
-                    <p class="text-xs text-pink-100 opacity-90">Xem lại chúc mừng sinh nhật</p>
-                </div>
-
-                <!-- Option 2: Nhật ký -->
-                <div onclick="selectMode('letter')" class="mode-card cursor-pointer bg-gradient-to-br from-indigo-600/80 to-purple-700/80 border border-white/30 rounded-2xl p-6 flex flex-col items-center justify-center text-white shadow-xl hover:border-white transition-all">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl mb-4 shadow-inner">
-                        ✉️
-                    </div>
-                    <h3 class="text-xl font-bold mb-1">Nhật Ký</h3>
-                    <p class="text-xs text-purple-100 opacity-90">Đây là những gì anh nghĩ</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Scene Letter / Daily Diary -->
-    <div id="scene-letter" class="scene hidden w-full h-full absolute top-0 left-0 bg-gradient-to-br from-rose-100 via-pink-100 to-purple-100 flex flex-col items-center p-3 md:p-6 overflow-y-auto" onclick="closeDateDropdown(event)">
-        <!-- Top Toolbar: Actions & Mode Switch -->
-        <div class="w-full max-w-2xl flex justify-between items-center gap-2 mb-4 z-30">
-            <button id="btn-back-mode" onclick="backToModeSelect()" class="text-xs md:text-sm bg-white/80 hover:bg-white text-pink-700 px-3.5 py-1.5 rounded-full shadow-sm transition-all font-medium border border-pink-200">
-                ← Đổi chế độ
-            </button>
-
-            <div class="flex items-center gap-2">
-                <button id="btn-edit-diary" onclick="openEditDiaryModal()" class="text-xs md:text-sm bg-amber-100 hover:bg-amber-200 text-amber-800 px-3.5 py-1.5 rounded-full shadow-sm transition-all font-medium border border-amber-300 flex items-center gap-1 hover:scale-105 active:scale-95">
-                    <span>✏️</span> Sửa Bài
-                </button>
-                <button id="btn-open-add-modal" onclick="openAddDiaryModal()" class="text-xs md:text-sm bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-3.5 py-1.5 rounded-full shadow-md transition-all flex items-center gap-1 font-medium hover:scale-105 active:scale-95">
-                    <span>➕</span> Bài Mới
-                </button>
-            </div>
-        </div>
-
+    <div id="scene-letter" class="scene hidden w-full h-full absolute top-0 left-0 bg-gradient-to-br from-rose-100 via-pink-100 to-purple-100 flex flex-col items-center p-2.5 sm:p-4 md:p-6 overflow-y-auto safe-area-pad" onclick="closeDateDropdown(event)">
         <!-- Journal Paper Card -->
-        <div class="letter-paper w-full max-w-2xl rounded-2xl p-6 md:p-10 border border-amber-200/60 my-auto relative overflow-hidden transition-all duration-700 transform shadow-2xl">
+        <div class="letter-paper w-full max-w-2xl rounded-2xl p-4 sm:p-6 md:p-10 border border-amber-200/60 my-auto relative overflow-hidden transition-all duration-700 transform shadow-2xl">
             <!-- Decorative ribbon top right -->
             <div class="absolute -top-10 -right-10 w-28 h-28 bg-pink-400/20 rounded-full blur-xl pointer-events-none"></div>
 
             <!-- Page Header: Prev Page Button | Interactive Date Selector Pill Dropdown | Next Page Button -->
-            <div class="flex justify-between items-center border-b border-amber-900/10 pb-4 mb-6 relative z-20">
+            <div class="flex justify-between items-center border-b border-amber-900/10 pb-3 sm:pb-4 mb-4 sm:mb-6 relative z-20 gap-2">
                 <!-- Prev Page Button -->
-                <button id="btn-prev-diary" onclick="prevDiaryEntry()" title="Trang trước (phím ◄)" class="page-flip-btn">
+                <button id="btn-prev-diary" onclick="prevDiaryEntry()" title="Trang trước (phím ◄)" class="page-flip-btn shrink-0">
                     ◄
                 </button>
 
                 <!-- Interactive Date Selector Pill & Dropdown -->
-                <div class="relative">
-                    <button id="letter-date-btn" onclick="toggleDateDropdown(event)" class="date-picker-pill px-4 py-1.5 rounded-full flex items-center gap-2 text-xs md:text-sm font-semibold tracking-wider text-pink-600 font-mono cursor-pointer shadow-sm">
-                        <span id="letter-mood" class="text-base">💖</span>
-                        <span id="letter-date"></span>
-                        <span class="text-[10px] opacity-70">▼</span>
+                <div class="relative max-w-[70%] truncate">
+                    <button id="letter-date-btn" onclick="toggleDateDropdown(event)" class="date-picker-pill px-3 sm:px-4 py-1.5 rounded-full flex items-center gap-1.5 sm:gap-2 text-xs md:text-sm font-semibold tracking-wider text-pink-600 font-mono cursor-pointer shadow-sm truncate max-w-full">
+                        <span id="letter-mood" class="text-sm sm:text-base shrink-0">💖</span>
+                        <span id="letter-date" class="truncate"></span>
+                        <span class="text-[10px] opacity-70 shrink-0">▼</span>
                     </button>
 
                     <!-- Dropdown List of Dates -->
-                    <div id="diary-date-dropdown" class="diary-dropdown-menu absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 md:w-72 rounded-2xl p-2 hidden transition-all duration-200 z-50 max-h-64 overflow-y-auto shadow-2xl">
+                    <div id="diary-date-dropdown" class="diary-dropdown-menu absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[85vw] max-w-xs sm:w-72 rounded-2xl p-2 hidden transition-all duration-200 z-50 max-h-64 overflow-y-auto shadow-2xl">
                         <!-- Injected dynamically by JS -->
                     </div>
                 </div>
 
                 <!-- Next Page Button & Entry Counter -->
-                <div class="flex items-center gap-2">
-                    <span id="diary-entry-counter" class="text-xs text-amber-800/70 font-mono bg-amber-100/60 px-2 py-0.5 rounded-full hidden sm:inline-block"></span>
-                    <button id="btn-next-diary" onclick="nextDiaryEntry()" title="Trang sau (phím ►)" class="page-flip-btn">
+                <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                    <span id="diary-entry-counter" class="text-[10px] sm:text-xs text-amber-800/70 font-mono bg-amber-100/60 px-2 py-0.5 rounded-full hidden sm:inline-block"></span>
+                    <button id="btn-next-diary" onclick="nextDiaryEntry()" title="Trang sau (phím ►)" class="page-flip-btn shrink-0">
                         ►
                     </button>
                 </div>
             </div>
 
             <!-- Title -->
-            <h2 id="letter-title" class="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center font-serif-elegant drop-shadow-sm"></h2>
+            <h2 id="letter-title" class="text-xl sm:text-2xl md:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 text-center font-serif-elegant drop-shadow-sm leading-snug"></h2>
 
             <!-- Polaroid Photos Showcase Container -->
-            <div id="diary-photos-container" class="flex flex-wrap items-center justify-center gap-4 my-6 hidden">
+            <div id="diary-photos-container" class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 my-4 sm:my-6 hidden">
                 <!-- Dynamic polaroid photo cards injected here -->
             </div>
 
             <!-- Letter Body Paragraphs -->
-            <div id="letter-body" class="space-y-4 text-gray-700 text-base md:text-lg leading-relaxed font-sans min-h-[140px]">
+            <div id="letter-body" class="space-y-3 sm:space-y-4 text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-sans min-h-[120px]">
                 <!-- Paragraphs will be dynamically injected with typing effect -->
             </div>
 
             <!-- Signature -->
-            <div id="letter-signature" class="mt-8 text-right text-xl md:text-3xl font-bold text-amber-900/80 font-handwriting tracking-wide opacity-0 transition-opacity duration-1000"></div>
+            <div id="letter-signature" class="mt-6 sm:mt-8 text-right text-lg sm:text-2xl md:text-3xl font-bold text-amber-900/80 font-handwriting tracking-wide opacity-0 transition-opacity duration-1000"></div>
         </div>
     </div>
 
     <!-- Lightbox Modal (Phóng to ảnh) -->
-    <div id="photo-lightbox" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex flex-col items-center justify-center p-4 transition-all duration-300 opacity-0" onclick="closeLightbox(event)">
-        <div class="relative max-w-3xl max-h-[85vh] flex flex-col items-center" onclick="event.stopPropagation()">
-            <button id="close-lightbox-btn" onclick="closeLightbox()" class="absolute -top-10 right-0 text-white bg-white/20 hover:bg-white/40 rounded-full w-8 h-8 flex items-center justify-center text-lg transition-colors">
+    <div id="photo-lightbox" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex flex-col items-center justify-center p-3 sm:p-4 transition-all duration-300 opacity-0 safe-area-pad" onclick="closeLightbox(event)">
+        <div class="relative max-w-3xl max-h-[85vh] flex flex-col items-center w-full" onclick="event.stopPropagation()">
+            <button id="close-lightbox-btn" onclick="closeLightbox()" class="absolute -top-10 right-0 text-white bg-white/20 hover:bg-white/40 rounded-full w-9 h-9 flex items-center justify-center text-lg transition-colors">
                 ✕
             </button>
-            <img id="lightbox-img" src="" alt="Full view" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain border-2 border-white/20">
-            <p id="lightbox-caption" class="text-white/90 text-sm mt-3 font-mono text-center"></p>
-        </div>
-    </div>
-
-    <!-- Modal Thêm/Sửa Nhật Ký -->
-    <div id="add-diary-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-all duration-300 opacity-0">
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl transform scale-95 transition-transform duration-300 overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center border-b pb-3 mb-4">
-                <h3 id="modal-diary-title" class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                    <span id="modal-diary-icon">📝</span> <span id="modal-diary-heading">Viết Trang Nhật Ký Mới</span>
-                </h3>
-                <button onclick="closeAddDiaryModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
-            </div>
-
-            <form id="add-diary-form" onsubmit="handleSaveDiary(event)" class="space-y-4">
-                <input type="hidden" id="input-diary-edit-id" value="">
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Ngày Tháng</label>
-                    <input type="text" id="input-diary-date" placeholder="VD: Ngày 15 Tháng 08 Năm 2026" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-800 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Tiêu Đề Nhật Ký</label>
-                    <input type="text" id="input-diary-title" placeholder="VD: Một ngày đặc biệt..." required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-800 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Cảm Xúc (Mood)</label>
-                        <select id="input-diary-mood" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-pink-500">
-                            <option value="💖" class="text-gray-800 bg-white">💖 Yêu thương</option>
-                            <option value="🎂" class="text-gray-800 bg-white">🎂 Sinh nhật</option>
-                            <option value="😊" class="text-gray-800 bg-white">😊 Vui vẻ</option>
-                            <option value="🥺" class="text-gray-800 bg-white">🥺 Nhớ em</option>
-                            <option value="☕" class="text-gray-800 bg-white">☕ Yên bình</option>
-                            <option value="🌙" class="text-gray-800 bg-white">🌙 Đêm muộn</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Chữ Ký</label>
-                        <input type="text" id="input-diary-signature" placeholder="VD: Mặt trời của em ☀" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-800 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Nội Dung Nhật Ký (xuống dòng cho mỗi đoạn)</label>
-                    <textarea id="input-diary-content" rows="4" placeholder="Nhập suy nghĩ, tâm sự của bạn tại đây..." required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-800 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
-                </div>
-
-                <!-- Existing Photos Management Container -->
-                <div id="existing-photos-wrapper" class="hidden">
-                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Ảnh Hiện Có (Bấm ✕ để xóa ảnh)</label>
-                    <div id="existing-photos-container" class="flex flex-wrap gap-2 mb-2 p-2 bg-gray-50 rounded-lg border"></div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Tải Thêm Ảnh Mới (Tùy chọn)</label>
-                    <input type="file" id="input-diary-photos" accept="image/*" multiple onchange="previewSelectedImages(event)" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer">
-                    <div id="photo-preview-container" class="flex flex-wrap gap-2 mt-3"></div>
-                </div>
-
-                <div class="flex justify-end gap-3 pt-3 border-t">
-                    <button type="button" onclick="closeAddDiaryModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors">
-                        Hủy
-                    </button>
-                    <button type="submit" class="px-5 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg text-sm font-medium shadow-md transition-all hover:scale-105 active:scale-95">
-                        💾 Lưu Nhật Ký
-                    </button>
-                </div>
-            </form>
+            <img id="lightbox-img" src="" alt="Full view" class="max-w-full max-h-[75vh] sm:max-h-[80vh] rounded-lg shadow-2xl object-contain border-2 border-white/20">
+            <p id="lightbox-caption" class="text-white/90 text-xs sm:text-sm mt-3 font-mono text-center px-2"></p>
         </div>
     </div>
 

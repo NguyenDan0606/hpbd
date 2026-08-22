@@ -2,9 +2,25 @@
 let currentScene = 1;
 const CORRECT_PASS = '13072000';
 let currentPass = '';
-let bgMusic = document.getElementById('bg-music');
 
-// Cấu hình Mặc Định Nhật Ký Theo Ngày
+/**
+ * Haptic Vibration Feedback for iOS / Android mobile touch interaction
+ */
+function triggerHaptic(duration = 15) {
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        try {
+            navigator.vibrate(duration);
+        } catch (e) {
+            // Ignore if vibration is restricted by browser policy
+        }
+    }
+}
+
+/**
+ * ============================================================================
+ * 📖 TEMPLATE MẪU VÀ DANH SÁCH BÀI VIẾT NHẬT KÝ (DEFAULT_DIARY_ENTRIES)
+ * ============================================================================
+ */
 const DEFAULT_DIARY_ENTRIES = [
     {
         id: "entry-1",
@@ -15,7 +31,7 @@ const DEFAULT_DIARY_ENTRIES = [
         paragraphs: [
             "Chào em,",
             "Em ổn không? Em có sao không? Cuộc sống em dạo này thế nào? Anh luôn muốn biết 1 ngày của em như thế nào? Vuii hay buồn? Có ai ăn hiếp bảo bối của anh không?",
-            "Anhhh, hỏng ổn :< ",
+            "Anhhhhhhhhh, hỏng ổn :< ",
             "Cóoo chứ, em có hỏi anh 100 lần hay 1000 lần, anh vẫn luôn trả lời là có, có thích em, có nhớ em, nhiều lắmmm, không 1 ngày nào anh không nhớ em hết.",
             "Tại sao em lại bước vào cuộc đời của anh? Bây giờ anh tiêu cực quá à:< anh hong thích anh chút nào hết, lúc nào anh cũng dày vò bản thân anh hết. Anh không cảm nhận được cuộc sống mình đang sống, anh không thấy dui dì hết, kì cục ạ, hạnh phúc mà em muốn anh có là gì?",
             "Anh nhớ emm!"
@@ -24,39 +40,87 @@ const DEFAULT_DIARY_ENTRIES = [
     },
     {
         id: "entry-2",
-        date: "Ngày 12 Tháng 08 Năm 2026",
-        title: "Chúc Mừng Sinh Nhật Yeee 🎂",
-        mood: "🎂",
+        date: "Ngày 09 Tháng 08 Năm 2026",
+        title: "",
+        mood: "",
         images: ["img/ye1.jpg", "img/ye2.jpg"],
         paragraphs: [
-            "Happy Birthday Người Đẹp Đặc Biệt, Dễ Thương Nhất Trên Thế Giới!",
-            "Hôm nay là một ngày thực sự rất đặc biệt. Mong em lúc nào cũng phải cười thật tươi và hạnh phúc nhé.",
-            "Bởi vì đối với anh, em luôn là điều đặc biệt nhất!"
+            "Trời ơi em biết dì hong, thằng Nguyễn Quốc Phiền, nóoooo coi thường Yến Phương ă, tức ghê luôn muốn méc emmmmmmmmmmmmmmmmmm, hồi trước thì nó ăn hiếp em, thằng này giờ nó lọng hành dữ lắm rồi",
+            "*Icon phẩn nộ*"
         ],
         signature: "Thằng nhóc của em 🐻"
-    }
+    },
+    {
+        id: "entry-3",
+        date: "Ngày 10 Tháng 08 Năm 2026",
+        title: "",
+        mood: "",
+        images: ["img/Group1.png"],
+        paragraphs: [
+        ],
+        signature: "Đ"
+    },
+    {
+        id: "entry-4",
+        date: "Ngày 11 Tháng 08 Năm 2026",
+        title: "",
+        mood: "",
+        images: ["img/Group1.png"],
+        paragraphs: [
+        ],
+        signature: "Đ"
+    },
+    {
+        id: "entry-5",
+        date: "Ngày 12 Tháng 08 Năm 2026",
+        title: "Tại sao chỉ dừng lại ở việc muốn mà không phải là có hay được nhỉ?",
+        images: ["img/Group2.png","img/Group3.png","img/Group4.png"],
+    },
+    {
+        id: "entry-6",
+        date: "",
+        title: "Vãiiiiiiiiiiiiiiiii",
+        mood: ".",
+        paragraphs: [
+            "Em quen Ku Hưng hã??????????????????????",
+        ],
+        signature: ""
+    },
+    {
+        id: "entry-7",
+        date: "",
+        title: "Tại sao em lại bước vào cuộc đời của anh?",
+        mood: "",
+        paragraphs: [
+            "Câu này hay lắm nèe, Trước đến giờ uống cà phê không thấy đắng, em cho anh kẹo, ăn kẹo của em vào và uống lại cà phê thì nó đắng nghét. Ở đây không nói đến kẹo hay cà phê.",
+        ],
+    },
+        {
+        id: "entry-8",
+        date: "",
+        title: "Xin hãy làm phiền anh điiiiiiiiiiiiiiiiiiiiiiiiiiii",
+    },
+        {
+        id: "entry-9",
+        date: "",
+        title: "THE LAST MEETING THEORY",
+        mood: "",
+        paragraphs: [
+            "Khi một người đã hoàn thành vai trò của họ trong cuộc đời bạn, 2 người sẽ không bao giờ gặp nhau nữa. Nghe có lẻ hỏng tin được đúng hong? Bởi trái đất này nó tròn lắm, 2 người vẫn có thể sống cùng 1 thành phố, đi qua những con đường quen thuộc, có chung vài người bạn hoặc đồng nghiệp, thậm chí đã từng xuất hiện trong cuộc sống của nhau mỗi ngày, nhưng rồi từ 1 thời điểm nào đó, mọi giao điểm có thể biến mất, như chưa từng tồn tại.",
+            "Có người đến để cho ta biết cảm giác được yêu thương, hạnh phúc là gì.",
+            "Có người sẽ khiến cho ta trưởng thành sau những lần tổn thương.",
+            "Cũng có người chỉ xuất hiện vài tháng ngắn ngủi mà có thể thay đổi cách mà ta nhìn cuộc đời suốt nhiều năm sau đó.",
+            "Theo giả thuyết này, khi cuộc gặp gỡ định mệnh này kết thúc, sứ mệnh của nhau đã hoàn thành, nhiệm vụ của cả 2 đã hoàn tất, từ đó không cần thiết phải gặp nhau nữa, cũng không nhất thiết phải ghét nhau, cũng chưa có lời chia tay nào to lớn, chỉ làa từ đó về sau cuộc đời của 2 người không còn đi chung 1 đường nữa.",
+            "Có thể là do duyên số, có thể là do định mệnh, có thể là do số phận, có thể là do ông trời, có thể là do bất cứ điều gì khác, nhưng dù là gì đi nữa, thì 2 người cũng sẽ không bao giờ gặp nhau nữa.",
+            "Có lẽ một vài người xuất hiện trong đời ta không phải để ở lại, mà chỉ để dạy cho ta biết cách yêu thương, cách trưởng thành, cách đối diện với cuộc sống, cách yêu bản thân mình hơn, cách trân trọng những gì mình đang có, cách biết ơn những gì mình đã nhận được, cách tha thứ cho những lỗi lầm của bản thân và của người khác, cách buông bỏ những gì không còn thuộc về mình, cách chấp nhận những gì không thể thay đổi, cách mỉm cười khi đối diện với khó khăn, cách đứng dậy sau vấp ngã, cách mạnh mẽ hơn sau những tổn thương, cách yêu đời hơn sau những mất mát, cách sống trọn vẹn hơn mỗi ngày.",
+            "Sống tốt nhé! *Kiểu gì cũng được, hạnh phúc nhé!*",
+        ],
+    },
 ];
 
-// Quản lý dữ liệu LocalStorage cho Nhật ký
+// Trực tiếp sử dụng mảng tĩnh trong code làm Nguồn Dữ Liệu Duy Nhất
 function getDiaryEntries() {
-    try {
-        const stored = localStorage.getItem('hpbd_diary_entries');
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-        }
-    } catch (e) {
-        console.error('Lỗi đọc diary entries từ localStorage:', e);
-    }
     return DEFAULT_DIARY_ENTRIES;
-}
-
-function saveDiaryEntriesToStorage(entries) {
-    try {
-        localStorage.setItem('hpbd_diary_entries', JSON.stringify(entries));
-    } catch (e) {
-        console.error('Lỗi lưu diary entries vào localStorage:', e);
-    }
 }
 
 // Global variables for Diary state
@@ -64,22 +128,13 @@ let diaryEntries = getDiaryEntries();
 let activeDiaryIndex = 0;
 let currentTypingTimer = null;
 let currentRenderId = 0; // Session token triệt tiêu race condition gõ chữ
-let selectedNewPhotosBase64 = [];
-let currentEditingExistingImages = [];
-
-// Autoplay Music Hack for modern browsers
-document.body.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        bgMusic.play().catch(e => console.log('Audio play prevented by browser'));
-    }
-}, { once: true });
 
 function nextScene() {
     const currentEl = document.getElementById(`scene${currentScene}`);
-    currentEl.classList.remove('active');
+    if (currentEl) currentEl.classList.remove('active');
     
     setTimeout(() => {
-        currentEl.classList.add('hidden');
+        if (currentEl) currentEl.classList.add('hidden');
         currentScene++;
         
         const nextEl = document.getElementById(`scene${currentScene}`);
@@ -102,6 +157,7 @@ const passDisplay = document.getElementById('password-display');
 let wrongAttempts = 0;
 
 function enterDigit(num) {
+    triggerHaptic(12);
     if(currentPass.length < 8) {
         currentPass += num;
         passDisplay.innerText = currentPass;
@@ -109,15 +165,17 @@ function enterDigit(num) {
 }
 
 function clearPassword() {
+    triggerHaptic(20);
     currentPass = '';
     passDisplay.innerText = '_';
 }
 
 function checkPassword() {
+    triggerHaptic(25);
     if (currentPass === CORRECT_PASS) {
         passDisplay.classList.add('bg-green-500/50');
         setTimeout(() => {
-            showModeModal();
+            startLetterFlow();
         }, 600);
     } else {
         wrongAttempts++;
@@ -128,50 +186,6 @@ function checkPassword() {
             clearPassword();
         }, 600);
     }
-}
-
-// Modal & Navigation Logic
-function showModeModal() {
-    const modal = document.getElementById('mode-modal');
-    modal.classList.remove('hidden');
-    void modal.offsetWidth;
-    modal.classList.remove('opacity-0');
-}
-
-function hideModeModal() {
-    const modal = document.getElementById('mode-modal');
-    modal.classList.add('opacity-0');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-    }, 500);
-}
-
-function selectMode(mode) {
-    hideModeModal();
-    setTimeout(() => {
-        if (mode === 'birthday') {
-            startBirthdayFlow();
-        } else if (mode === 'letter') {
-            startLetterFlow();
-        }
-    }, 500);
-}
-
-function startBirthdayFlow() {
-    const scene1 = document.getElementById('scene1');
-    const sceneLetter = document.getElementById('scene-letter');
-    scene1.classList.remove('active');
-    if (sceneLetter) sceneLetter.classList.remove('active');
-    
-    setTimeout(() => {
-        scene1.classList.add('hidden');
-        if (sceneLetter) sceneLetter.classList.add('hidden');
-        currentScene = 2;
-        const scene2 = document.getElementById('scene2');
-        scene2.classList.remove('hidden');
-        void scene2.offsetWidth;
-        scene2.classList.add('active');
-    }, 800);
 }
 
 function startLetterFlow() {
@@ -193,15 +207,6 @@ function startLetterFlow() {
     }, 800);
 }
 
-function backToModeSelect() {
-    const sceneLetter = document.getElementById('scene-letter');
-    sceneLetter.classList.remove('active');
-    setTimeout(() => {
-        sceneLetter.classList.add('hidden');
-        showModeModal();
-    }, 500);
-}
-
 // ================= SCENE DIARY / LETTER =================
 function initLetterScene() {
     diaryEntries = getDiaryEntries();
@@ -213,18 +218,21 @@ function initLetterScene() {
 }
 
 function prevDiaryEntry() {
+    triggerHaptic(15);
     if (activeDiaryIndex > 0) {
         switchDiaryEntry(activeDiaryIndex - 1);
     }
 }
 
 function nextDiaryEntry() {
+    triggerHaptic(15);
     if (activeDiaryIndex < diaryEntries.length - 1) {
         switchDiaryEntry(activeDiaryIndex + 1);
     }
 }
 
 function toggleDateDropdown(event) {
+    triggerHaptic(10);
     if (event) event.stopPropagation();
     const dropdown = document.getElementById('diary-date-dropdown');
     if (!dropdown) return;
@@ -291,6 +299,7 @@ function renderDateDropdownMenu() {
 
 function switchDiaryEntry(index) {
     if (index < 0 || index >= diaryEntries.length) return;
+    triggerHaptic(15);
     activeDiaryIndex = index;
     renderDateDropdownMenu();
     renderActiveDiaryEntry(index);
@@ -425,9 +434,12 @@ function renderPolaroidPhotos(images) {
     images.forEach((imgSrc, idx) => {
         const rot = rotations[idx % rotations.length];
         const card = document.createElement('div');
-        card.className = 'polaroid-card w-28 md:w-36 h-36 md:h-44 cursor-pointer transform';
+        card.className = 'polaroid-card w-24 sm:w-28 md:w-36 h-32 sm:h-36 md:h-44 cursor-pointer transform';
         card.style.transform = `rotate(${rot}deg)`;
-        card.onclick = () => openLightbox(imgSrc, `Ảnh kỷ niệm ${idx + 1}`);
+        card.onclick = () => {
+            triggerHaptic(10);
+            openLightbox(imgSrc, `Ảnh kỷ niệm ${idx + 1}`);
+        };
 
         card.innerHTML = `
             <div class="polaroid-tape"></div>
@@ -469,206 +481,7 @@ function closeLightbox(event) {
     }, 300);
 }
 
-// Add / Edit Diary Entry Modal logic
-function openAddDiaryModal() {
-    const modal = document.getElementById('add-diary-modal');
-    if (!modal) return;
 
-    // Reset Edit State
-    document.getElementById('input-diary-edit-id').value = '';
-    const modalIcon = document.getElementById('modal-diary-icon');
-    const modalHeading = document.getElementById('modal-diary-heading');
-    if (modalIcon) modalIcon.innerText = '📝';
-    if (modalHeading) modalHeading.innerText = 'Viết Trang Nhật Ký Mới';
-
-    // Hide existing photos container
-    currentEditingExistingImages = [];
-    renderExistingPhotosForEdit();
-
-    // Reset Form & Photo Preview
-    const form = document.getElementById('add-diary-form');
-    if (form) form.reset();
-
-    selectedNewPhotosBase64 = [];
-    const previewContainer = document.getElementById('photo-preview-container');
-    if (previewContainer) previewContainer.innerHTML = '';
-
-    // Pre-fill today's date formatted
-    const dateInput = document.getElementById('input-diary-date');
-    if (dateInput) {
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const yyyy = today.getFullYear();
-        dateInput.value = `Ngày ${dd} Tháng ${mm} Năm ${yyyy}`;
-    }
-
-    modal.classList.remove('hidden');
-    void modal.offsetWidth;
-    modal.classList.remove('opacity-0');
-}
-
-function openEditDiaryModal() {
-    const entry = diaryEntries[activeDiaryIndex];
-    if (!entry) return;
-
-    const modal = document.getElementById('add-diary-modal');
-    if (!modal) return;
-
-    // Set Edit Mode State
-    document.getElementById('input-diary-edit-id').value = entry.id;
-    const modalIcon = document.getElementById('modal-diary-icon');
-    const modalHeading = document.getElementById('modal-diary-heading');
-    if (modalIcon) modalIcon.innerText = '✏️';
-    if (modalHeading) modalHeading.innerText = 'Chỉnh Sửa Trang Nhật Ký';
-
-    // Pre-fill form fields
-    document.getElementById('input-diary-date').value = entry.date || '';
-    document.getElementById('input-diary-title').value = entry.title || '';
-    document.getElementById('input-diary-mood').value = entry.mood || '💖';
-    document.getElementById('input-diary-signature').value = entry.signature || '';
-    document.getElementById('input-diary-content').value = (entry.paragraphs || []).join('\n');
-
-    // Populate existing images
-    currentEditingExistingImages = [...(entry.images || [])];
-    renderExistingPhotosForEdit();
-
-    // Reset new selected files input & preview
-    const fileInput = document.getElementById('input-diary-photos');
-    if (fileInput) fileInput.value = '';
-    selectedNewPhotosBase64 = [];
-    const previewContainer = document.getElementById('photo-preview-container');
-    if (previewContainer) previewContainer.innerHTML = '';
-
-    modal.classList.remove('hidden');
-    void modal.offsetWidth;
-    modal.classList.remove('opacity-0');
-}
-
-function renderExistingPhotosForEdit() {
-    const wrapper = document.getElementById('existing-photos-wrapper');
-    const container = document.getElementById('existing-photos-container');
-    if (!wrapper || !container) return;
-
-    container.innerHTML = '';
-    if (!currentEditingExistingImages || currentEditingExistingImages.length === 0) {
-        wrapper.classList.add('hidden');
-        return;
-    }
-
-    wrapper.classList.remove('hidden');
-
-    currentEditingExistingImages.forEach((imgSrc, idx) => {
-        const item = document.createElement('div');
-        item.className = 'relative w-14 h-14 group border rounded-md overflow-hidden shadow-sm';
-
-        item.innerHTML = `
-            <img src="${imgSrc}" class="w-full h-full object-cover">
-            <button type="button" onclick="removeExistingPhoto(${idx})" class="absolute top-0.5 right-0.5 bg-red-500 hover:bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shadow">
-                ✕
-            </button>
-        `;
-        container.appendChild(item);
-    });
-}
-
-function removeExistingPhoto(index) {
-    if (index >= 0 && index < currentEditingExistingImages.length) {
-        currentEditingExistingImages.splice(index, 1);
-        renderExistingPhotosForEdit();
-    }
-}
-
-function closeAddDiaryModal() {
-    const modal = document.getElementById('add-diary-modal');
-    if (!modal) return;
-
-    modal.classList.add('opacity-0');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-    }, 300);
-}
-
-function previewSelectedImages(event) {
-    const files = event.target.files;
-    const previewContainer = document.getElementById('photo-preview-container');
-    if (!previewContainer) return;
-
-    previewContainer.innerHTML = '';
-    selectedNewPhotosBase64 = [];
-
-    if (!files || files.length === 0) return;
-
-    Array.from(files).forEach(file => {
-        if (!file.type.startsWith('image/')) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const base64 = e.target.result;
-            selectedNewPhotosBase64.push(base64);
-
-            const imgThumb = document.createElement('img');
-            imgThumb.src = base64;
-            imgThumb.className = 'w-12 h-12 object-cover rounded-md border border-pink-200 shadow-sm';
-            previewContainer.appendChild(imgThumb);
-        };
-        reader.readAsDataURL(file);
-    });
-}
-
-function handleSaveDiary(event) {
-    event.preventDefault();
-
-    const editId = document.getElementById('input-diary-edit-id').value;
-    const dateVal = document.getElementById('input-diary-date').value.trim();
-    const titleVal = document.getElementById('input-diary-title').value.trim();
-    const moodVal = document.getElementById('input-diary-mood').value;
-    const signatureVal = document.getElementById('input-diary-signature').value.trim() || 'Mặt trời của em ☀';
-    const contentVal = document.getElementById('input-diary-content').value.trim();
-
-    if (!dateVal || !titleVal || !contentVal) {
-        alert('Vui lòng điền đầy đủ Ngày, Tiêu đề và Nội dung nhật ký!');
-        return;
-    }
-
-    const paragraphs = contentVal.split('\n').map(p => p.trim()).filter(p => p.length > 0);
-    const finalImages = [...currentEditingExistingImages, ...selectedNewPhotosBase64];
-
-    if (editId) {
-        // Mode EDIT: Update entry by id
-        const targetIdx = diaryEntries.findIndex(item => item.id === editId);
-        if (targetIdx !== -1) {
-            diaryEntries[targetIdx] = {
-                ...diaryEntries[targetIdx],
-                date: dateVal,
-                title: titleVal,
-                mood: moodVal,
-                images: finalImages,
-                paragraphs: paragraphs,
-                signature: signatureVal
-            };
-        }
-    } else {
-        // Mode CREATE: Add new entry
-        const newEntry = {
-            id: `entry-${Date.now()}`,
-            date: dateVal,
-            title: titleVal,
-            mood: moodVal,
-            images: finalImages,
-            paragraphs: paragraphs,
-            signature: signatureVal
-        };
-        diaryEntries.push(newEntry);
-        activeDiaryIndex = diaryEntries.length - 1;
-    }
-
-    saveDiaryEntriesToStorage(diaryEntries);
-    closeAddDiaryModal();
-
-    renderDateDropdownMenu();
-    renderActiveDiaryEntry(activeDiaryIndex);
-}
 
 
 
