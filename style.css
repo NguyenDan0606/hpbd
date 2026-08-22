@@ -227,6 +227,12 @@ body {
     transform: none !important;
 }
 
+/* Touch Scrolling Optimization for Mobile Devices */
+#scene-letter {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+}
+
 
 
 

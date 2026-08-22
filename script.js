@@ -41,7 +41,7 @@ const DEFAULT_DIARY_ENTRIES = [
     {
         id: "entry-2",
         date: "Ngày 09 Tháng 08 Năm 2026",
-        title: "Hôm nay vui hay buồn? 🐻",
+        title: "Hôm nay của em như thế nào? 🐻",
         mood: "🐻",
         images: ["img/ye1.jpg", "img/ye2.jpg"],
         paragraphs: [
@@ -60,32 +60,12 @@ const DEFAULT_DIARY_ENTRIES = [
         signature: "Đ"
     },
     {
-        id: "entry-4",
-        date: "Ngày 11 Tháng 08 Năm 2026",
-        title: "Những khoảnh khắc 📸",
-        mood: "✨",
-        images: ["img/Group1.png"],
-        paragraphs: [],
-        signature: "Đ"
-    },
-    {
         id: "entry-5",
         date: "Ngày 12 Tháng 08 Năm 2026",
         title: "Tại sao chỉ dừng lại ở việc muốn mà không phải là có hay được nhỉ?",
         mood: "💭",
         images: ["img/Group2.png","img/Group3.png","img/Group4.png"],
         paragraphs: [],
-        signature: "Đ"
-    },
-    {
-        id: "entry-6",
-        date: "Ngày 13 Tháng 08 Năm 2026",
-        title: "Vãiiiiiiiiiiiiiiiii",
-        mood: "😲",
-        images: [],
-        paragraphs: [
-            "Em quen Ku Hưng hã??????????????????????"
-        ],
         signature: "Đ"
     },
     {
@@ -110,6 +90,17 @@ const DEFAULT_DIARY_ENTRIES = [
     },
     {
         id: "entry-9",
+        date: "",
+        title: "Vãiiiiiiiiiiiiiiiii",
+        mood: "😲",
+        images: [],
+        paragraphs: [
+            "Em quen Ku Hưng hã??????????????????????"
+        ],
+        signature: "Đ"
+    },
+    {
+        id: "entry-10",
         date: "Ngày 16 Tháng 08 Năm 2026",
         title: "THE LAST MEETING THEORY",
         mood: "🌙",
@@ -328,6 +319,10 @@ function switchDiaryEntry(index) {
 function renderActiveDiaryEntry(index) {
     const entry = diaryEntries[index] || diaryEntries[0];
     if (!entry) return;
+
+    // Reset scroll container to top for long entries
+    const sceneLetter = document.getElementById('scene-letter');
+    if (sceneLetter) sceneLetter.scrollTop = 0;
 
     // Increment renderId token to instantly invalidate any previous typing loops or setTimeouts!
     const renderId = ++currentRenderId;
