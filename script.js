@@ -41,8 +41,8 @@ const DEFAULT_DIARY_ENTRIES = [
     {
         id: "entry-2",
         date: "Ngày 09 Tháng 08 Năm 2026",
-        title: "",
-        mood: "",
+        title: "Hôm nay vui hay buồn? 🐻",
+        mood: "🐻",
         images: ["img/ye1.jpg", "img/ye2.jpg"],
         paragraphs: [
             "Trời ơi em biết dì hong, thằng Nguyễn Quốc Phiền, nóoooo coi thường Yến Phương ă, tức ghê luôn muốn méc emmmmmmmmmmmmmmmmmm, hồi trước thì nó ăn hiếp em, thằng này giờ nó lọng hành dữ lắm rồi",
@@ -53,58 +53,67 @@ const DEFAULT_DIARY_ENTRIES = [
     {
         id: "entry-3",
         date: "Ngày 10 Tháng 08 Năm 2026",
-        title: "",
-        mood: "",
+        title: "Kỷ niệm 🌸",
+        mood: "✨",
         images: ["img/Group1.png"],
-        paragraphs: [
-        ],
+        paragraphs: [],
         signature: "Đ"
     },
     {
         id: "entry-4",
         date: "Ngày 11 Tháng 08 Năm 2026",
-        title: "",
-        mood: "",
+        title: "Những khoảnh khắc 📸",
+        mood: "✨",
         images: ["img/Group1.png"],
-        paragraphs: [
-        ],
+        paragraphs: [],
         signature: "Đ"
     },
     {
         id: "entry-5",
         date: "Ngày 12 Tháng 08 Năm 2026",
         title: "Tại sao chỉ dừng lại ở việc muốn mà không phải là có hay được nhỉ?",
+        mood: "💭",
         images: ["img/Group2.png","img/Group3.png","img/Group4.png"],
+        paragraphs: [],
+        signature: "Đ"
     },
     {
         id: "entry-6",
-        date: "",
+        date: "Ngày 13 Tháng 08 Năm 2026",
         title: "Vãiiiiiiiiiiiiiiiii",
-        mood: ".",
+        mood: "😲",
+        images: [],
         paragraphs: [
-            "Em quen Ku Hưng hã??????????????????????",
+            "Em quen Ku Hưng hã??????????????????????"
         ],
-        signature: ""
+        signature: "Đ"
     },
     {
         id: "entry-7",
-        date: "",
+        date: "Ngày 14 Tháng 08 Năm 2026",
         title: "Tại sao em lại bước vào cuộc đời của anh?",
-        mood: "",
+        mood: "☕",
+        images: [],
         paragraphs: [
-            "Câu này hay lắm nèe, Trước đến giờ uống cà phê không thấy đắng, em cho anh kẹo, ăn kẹo của em vào và uống lại cà phê thì nó đắng nghét. Ở đây không nói đến kẹo hay cà phê.",
+            "Câu này hay lắm nèe, Trước đến giờ uống cà phê không thấy đắng, em cho anh kẹo, ăn kẹo của em vào và uống lại cà phê thì nó đắng nghét. Ở đây không nói đến kẹo hay cà phê."
         ],
+        signature: "Đ"
     },
-        {
+    {
         id: "entry-8",
-        date: "",
+        date: "Ngày 15 Tháng 08 Năm 2026",
         title: "Xin hãy làm phiền anh điiiiiiiiiiiiiiiiiiiiiiiiiiii",
+        mood: "🥺",
+        images: [],
+        paragraphs: [],
+        signature: "Đ"
     },
-        {
+    {
         id: "entry-9",
-        date: "",
+        date: "Ngày 16 Tháng 08 Năm 2026",
         title: "THE LAST MEETING THEORY",
-        mood: "",
+        mood: "🌙",
+        images: [],
         paragraphs: [
             "Khi một người đã hoàn thành vai trò của họ trong cuộc đời bạn, 2 người sẽ không bao giờ gặp nhau nữa. Nghe có lẻ hỏng tin được đúng hong? Bởi trái đất này nó tròn lắm, 2 người vẫn có thể sống cùng 1 thành phố, đi qua những con đường quen thuộc, có chung vài người bạn hoặc đồng nghiệp, thậm chí đã từng xuất hiện trong cuộc sống của nhau mỗi ngày, nhưng rồi từ 1 thời điểm nào đó, mọi giao điểm có thể biến mất, như chưa từng tồn tại.",
             "Có người đến để cho ta biết cảm giác được yêu thương, hạnh phúc là gì.",
@@ -113,9 +122,10 @@ const DEFAULT_DIARY_ENTRIES = [
             "Theo giả thuyết này, khi cuộc gặp gỡ định mệnh này kết thúc, sứ mệnh của nhau đã hoàn thành, nhiệm vụ của cả 2 đã hoàn tất, từ đó không cần thiết phải gặp nhau nữa, cũng không nhất thiết phải ghét nhau, cũng chưa có lời chia tay nào to lớn, chỉ làa từ đó về sau cuộc đời của 2 người không còn đi chung 1 đường nữa.",
             "Có thể là do duyên số, có thể là do định mệnh, có thể là do số phận, có thể là do ông trời, có thể là do bất cứ điều gì khác, nhưng dù là gì đi nữa, thì 2 người cũng sẽ không bao giờ gặp nhau nữa.",
             "Có lẽ một vài người xuất hiện trong đời ta không phải để ở lại, mà chỉ để dạy cho ta biết cách yêu thương, cách trưởng thành, cách đối diện với cuộc sống, cách yêu bản thân mình hơn, cách trân trọng những gì mình đang có, cách biết ơn những gì mình đã nhận được, cách tha thứ cho những lỗi lầm của bản thân và của người khác, cách buông bỏ những gì không còn thuộc về mình, cách chấp nhận những gì không thể thay đổi, cách mỉm cười khi đối diện với khó khăn, cách đứng dậy sau vấp ngã, cách mạnh mẽ hơn sau những tổn thương, cách yêu đời hơn sau những mất mát, cách sống trọn vẹn hơn mỗi ngày.",
-            "Sống tốt nhé! *Kiểu gì cũng được, hạnh phúc nhé!*",
+            "Sống tốt nhé! *Kiểu gì cũng được, hạnh phúc nhé!*"
         ],
-    },
+        signature: "Đ"
+    }
 ];
 
 // Trực tiếp sử dụng mảng tĩnh trong code làm Nguồn Dữ Liệu Duy Nhất
@@ -173,13 +183,19 @@ function clearPassword() {
 function checkPassword() {
     triggerHaptic(25);
     if (currentPass === CORRECT_PASS) {
+        passDisplay.classList.remove('bg-red-500/50');
         passDisplay.classList.add('bg-green-500/50');
         setTimeout(() => {
             startLetterFlow();
-        }, 600);
+        }, 300);
     } else {
         wrongAttempts++;
         passDisplay.classList.add('bg-red-500/50', 'animate-pulse');
+
+        const hintEl = document.getElementById('password-hint');
+        if (hintEl && wrongAttempts >= 1) {
+            hintEl.classList.remove('hidden');
+        }
 
         setTimeout(() => {
             passDisplay.classList.remove('bg-red-500/50', 'animate-pulse');
@@ -191,20 +207,24 @@ function checkPassword() {
 function startLetterFlow() {
     const scene1 = document.getElementById('scene1');
     const scene2 = document.getElementById('scene2');
-    scene1.classList.remove('active');
-    if (scene2) scene2.classList.remove('active');
-    
-    setTimeout(() => {
+    const sceneLetter = document.getElementById('scene-letter');
+
+    if (scene1) {
+        scene1.classList.remove('active');
         scene1.classList.add('hidden');
-        if (scene2) scene2.classList.add('hidden');
-        
-        const sceneLetter = document.getElementById('scene-letter');
+    }
+    if (scene2) {
+        scene2.classList.remove('active');
+        scene2.classList.add('hidden');
+    }
+
+    if (sceneLetter) {
         sceneLetter.classList.remove('hidden');
         void sceneLetter.offsetWidth;
         sceneLetter.classList.add('active');
-        
-        initLetterScene();
-    }, 800);
+    }
+    
+    initLetterScene();
 }
 
 // ================= SCENE DIARY / LETTER =================
@@ -286,8 +306,8 @@ function renderDateDropdownMenu() {
             <div class="flex items-center gap-2 truncate">
                 <span class="text-base shrink-0">${entry.mood || '📝'}</span>
                 <div class="truncate">
-                    <div class="truncate">${entry.title}</div>
-                    <div class="text-[10px] ${isActive ? 'text-pink-100' : 'text-gray-400'} font-mono">${entry.date}</div>
+                    <div class="truncate">${entry.title || entry.date || 'Nhật ký'}</div>
+                    <div class="text-[10px] ${isActive ? 'text-pink-100' : 'text-gray-400'} font-mono">${entry.date || ''}</div>
                 </div>
             </div>
             ${isActive ? '<span class="text-xs shrink-0">✓</span>' : ''}
@@ -318,6 +338,9 @@ function renderActiveDiaryEntry(index) {
         currentTypingTimer = null;
     }
 
+    const paragraphs = Array.isArray(entry.paragraphs) ? entry.paragraphs : [];
+    const images = Array.isArray(entry.images) ? entry.images : [];
+
     // Set Date, Mood, Counter, Title
     const dateEl = document.getElementById('letter-date');
     const moodEl = document.getElementById('letter-mood');
@@ -326,9 +349,19 @@ function renderActiveDiaryEntry(index) {
     const prevBtn = document.getElementById('btn-prev-diary');
     const nextBtn = document.getElementById('btn-next-diary');
 
-    if (dateEl) dateEl.innerText = entry.date;
+    if (dateEl) dateEl.innerText = entry.date || 'Nhật ký';
     if (moodEl) moodEl.innerText = entry.mood || '💖';
-    if (titleEl) titleEl.innerText = entry.title;
+    
+    if (titleEl) {
+        if (entry.title && entry.title.trim() !== '') {
+            titleEl.innerText = entry.title;
+            titleEl.classList.remove('hidden');
+        } else {
+            titleEl.innerText = '';
+            titleEl.classList.add('hidden');
+        }
+    }
+
     if (counterEl) counterEl.innerText = `${index + 1} / ${diaryEntries.length}`;
 
     // Enable/disable page flip buttons
@@ -336,7 +369,7 @@ function renderActiveDiaryEntry(index) {
     if (nextBtn) nextBtn.disabled = index === diaryEntries.length - 1;
 
     // Render Polaroid Photos Showcase
-    renderPolaroidPhotos(entry.images || []);
+    renderPolaroidPhotos(images);
 
     // Render Body Paragraphs with Typing Effect
     const bodyContainer = document.getElementById('letter-body');
@@ -348,13 +381,19 @@ function renderActiveDiaryEntry(index) {
     signatureEl.classList.add('opacity-0');
     signatureEl.innerText = entry.signature || '';
 
+    if (paragraphs.length === 0) {
+        if (entry.signature) {
+            signatureEl.classList.remove('opacity-0');
+        }
+        return;
+    }
+
     let pIndex = 0;
 
     function typeNextParagraph() {
-        // If a newer render was triggered, cancel cleanly!
         if (renderId !== currentRenderId) return;
 
-        if (pIndex >= entry.paragraphs.length) {
+        if (pIndex >= paragraphs.length) {
             setTimeout(() => {
                 if (renderId !== currentRenderId) return;
                 signatureEl.classList.remove('opacity-0');
@@ -362,7 +401,7 @@ function renderActiveDiaryEntry(index) {
             return;
         }
 
-        const pText = entry.paragraphs[pIndex];
+        const pText = paragraphs[pIndex] || '';
         const pEl = document.createElement('p');
         pEl.className = 'opacity-0 transform translate-y-2 transition-all duration-500 font-sans';
         bodyContainer.appendChild(pEl);
